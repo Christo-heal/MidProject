@@ -1,13 +1,13 @@
 package mid.project;
 
 public class pengguna {
-    private String uname;
-    private String namaPjg;
-    private String email;
-    private String password;
-    private int wallet;
+    String uname;
+    String namaPjg;
+    String email;
+    String password;
+    int wallet;
 
-    public pengguna(String uname, String namaPjg, String email, String password, int wallet) {
+    public pengguna(String uname, String namaPjg, String email, String password,int wallet) {
         this.uname = uname;
         this.namaPjg = namaPjg;
         this.email = email;
@@ -15,8 +15,6 @@ public class pengguna {
         this.wallet = wallet;
     }
 
-    public pengguna(String uname, String namaPjg, String email, String password) {
-    }
 
     public String getUname() {
         return uname;
