@@ -45,7 +45,6 @@ public class Main {
 
         this.loadData();
 
-        System.out.println("Anda sudah terdaftar!");
         while (true) {
             System.out.print(
                     "Selamat datang di Program\n" +
@@ -67,7 +66,7 @@ public class Main {
                     File fileKu = new File("pengguna.txt");
                     try (FileWriter fw = new FileWriter(fileKu,true)){
                         wallet = 1000;
-                        fw.write("\n"+uname+";"+namaPjg+";"+email+";"+password+";"+ wallet);
+                        fw.write(uname+";"+namaPjg+";"+email+";"+password+";"+ wallet+"\n");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
