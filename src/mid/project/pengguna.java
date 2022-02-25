@@ -16,6 +16,7 @@ public class pengguna {
     }
 
 
+
     public String getUname() {
         return uname;
     }

@@ -1,5 +1,10 @@
 package mid.project;
 import mid.project.pengguna;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,13 +13,39 @@ public class Main {
 
     private ArrayList<pengguna> listPengguna;
     private Scanner scan;
+
+    void loadData(){
+        File dataFile = new File("pengguna.txt");
+
+        if(!dataFile.exists()){
+            return;
+        }
+        try (Scanner fileRead = new Scanner(dataFile)){
+            while(fileRead.hasNextLine()) {
+                String line = fileRead.nextLine();
+                String[] arr = line.split(";");
+                pengguna pgn = new pengguna(arr[0],arr[1],arr[2],arr[3],Integer.parseInt(arr[4]));
+                listPengguna.add(pgn);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     String usertemp;
     String passtemp;
+    String uname,namaPjg,email,password;
+    int wallet;
+
+
 
     public Main() {
         listPengguna = new ArrayList<>();
         scan = new Scanner(System.in);
 
+        this.loadData();
+
+        System.out.println("Anda sudah terdaftar!");
         while (true) {
             System.out.print(
                     "Selamat datang di Program\n" +
@@ -33,13 +64,20 @@ public class Main {
                     break;
                 case 2:
                     this.registerUser();
+                    File fileKu = new File("pengguna.txt");
+                    try (FileWriter fw = new FileWriter(fileKu,true)){
+                        wallet = 1000;
+                        fw.write("\n"+uname+";"+namaPjg+";"+email+";"+password+";"+ wallet);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case 3:
                     this.checkUser();
                     break;
                 case 0:
-
-                    break;
+                    System.exit(1);
 
                 default:
                     System.out.println("Error! Enter correct operator");
@@ -53,6 +91,7 @@ public class Main {
         usertemp = login.nextLine();  // Read user input
         System.out.println("Password : ");
         passtemp = login.nextLine();  // Read user input
+
     }
 
     void checkLoginUser(){
@@ -72,13 +111,13 @@ public class Main {
     void registerUser(){
         Scanner register = new Scanner(System.in);
         System.out.println("Username : ");
-        String uname = register.nextLine();
+        uname = register.nextLine();
         System.out.println("Nama Panjang : ");
-        String namaPjg = register.nextLine();
+        namaPjg = register.nextLine();
         System.out.println("Email : ");
-        String email = register.nextLine();
+        email = register.nextLine();
         System.out.println("Password : ");
-        String password = register.nextLine();
+        password = register.nextLine();
 
         pengguna pgn;
         int wallet = 1000;
@@ -99,6 +138,7 @@ public class Main {
             }
         }
         scan.nextLine();
+
     }
 
     public static void main(String[] args) {
