@@ -12,6 +12,7 @@ public class Main {
 
     private ArrayList<pengguna> listPengguna;
     private Scanner scan;
+    pengguna pgn;
 
     void loadData(){
         File dataFile = new File("pengguna.txt");
@@ -69,11 +70,12 @@ public class Main {
                     break;
                 case 3:
                     this.checkUser();
-
+                    break;
                 case 0:
                     System.exit(1);
                 default:
                     System.out.println("Error! Enter correct operator");
+                    break;
             }
             if(this.checkLoginUser() == 1){
                 break;
@@ -81,7 +83,55 @@ public class Main {
         }
 
         // program utama
+        Scanner menuutama = new Scanner(System.in);
         System.out.println("Selamat datang diprogram");
+        System.out.println(
+                "1. Beli Produk\n"+
+                "2. History Pembelian\n"+
+                "3. Tambah Uang\n"+
+                "4. Cek Uang\n"+
+                "5. Logout\n"+
+                "6. Exit\n");
+        System.out.printf(">> ");
+        int pil2 = menuutama.nextInt();
+        switch (pil2) {
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+                Scanner money = new Scanner(System.in);
+                System.out.println("Uang saat ini adalah : " + wallet + "\n");
+                System.out.println("Masukan uang yang ingin ditambahkan\n");
+                System.out.printf(">> ");
+                int uangMasuk = money.nextInt();
+                wallet += uangMasuk;
+
+                this.saveData();
+
+                System.out.println("Uang saat ini adalah : " + wallet + "\n");
+                break;
+
+            case 4:
+                System.out.println("Uang saat ini adalah : " + wallet);
+                break;
+
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+
+            default:
+                System.out.println("Error! Enter correct operator");
+        }
+
     }
 
     void loginUser(){
@@ -98,6 +148,11 @@ public class Main {
             if (usertemp.equals(tmp.uname)) {
                 if (passtemp.equals(tmp.password)) {
                     System.out.println("Berhasil login");
+                    uname = tmp.uname;
+                    password = tmp.password;
+                    namaPjg = tmp.namaPjg;
+                    email = tmp.email;
+                    wallet = tmp.wallet;
                     return 1;
                 }
             }
@@ -140,6 +195,17 @@ public class Main {
         }
         scan.nextLine();
 
+    }
+
+    void saveData(){
+        File dataFile = new File("pengguna.txt");
+        try (FileWriter fileWrite = new FileWriter(dataFile);){
+            for (pengguna pgn : listPengguna){
+                fileWrite.write(pgn.getUname()+";"+pgn.getNamaPjg()+";"+pgn.getEmail()+";"+pgn.getPassword()+";"+pgn.getWallet()+"\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
