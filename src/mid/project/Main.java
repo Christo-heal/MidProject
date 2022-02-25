@@ -1,5 +1,4 @@
 package mid.project;
-import mid.project.pengguna;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +37,6 @@ public class Main {
     int wallet;
 
 
-
     public Main() {
         listPengguna = new ArrayList<>();
         scan = new Scanner(System.in);
@@ -58,8 +56,6 @@ public class Main {
             switch (pil1) {
                 case 1:
                     this.loginUser();
-                    this.checkLoginUser();
-                    scan.nextLine();
                     break;
                 case 2:
                     this.registerUser();
@@ -70,18 +66,22 @@ public class Main {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                     break;
                 case 3:
                     this.checkUser();
-                    break;
+
                 case 0:
                     System.exit(1);
-
                 default:
                     System.out.println("Error! Enter correct operator");
             }
+            if(this.checkLoginUser() == 1){
+                break;
+            }
         }
+
+        // program utama
+        System.out.println("Selamat datang diprogram");
     }
 
     void loginUser(){
@@ -93,18 +93,20 @@ public class Main {
 
     }
 
-    void checkLoginUser(){
+    int checkLoginUser(){
         for (pengguna tmp : listPengguna) {
             if (usertemp.equals(tmp.uname)) {
                 if (passtemp.equals(tmp.password)) {
                     System.out.println("Berhasil login");
-                    return ;
+                    return 1;
                 }
             }
         }
         System.out.println(
                 "Username atau password salah\n" +
                 "Silahkan coba lagi");
+        scan.nextLine();
+        return 0;
     }
 
     void registerUser(){
